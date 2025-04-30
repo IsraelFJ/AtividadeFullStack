@@ -1,0 +1,47 @@
+package com.example.AtividadeFullStack.service;
+
+import com.example.AtividadeFullStack.exeption.EmailJaCadastradoException;
+import com.example.AtividadeFullStack.model.Usuario;
+import com.example.AtividadeFullStack.repository.UsuarioRepository;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+
+@Service
+@Validated
+public class UsuarioService {
+    private UsuarioRepository usuarioRepository;
+
+    public List<Usuario>listartodos(){
+         return usuarioRepository.findAll();
+    }
+
+    public Usuario salvar(@Valid Usuario usuario){
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new EmailJaCadastradoException("Usuário já cadastrado.");
+        }
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario atualizar(@Valid Usuario usuario) {
+        Usuario usuarioAtualizar = usuarioRepository.findById(usuario.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrado."));
+
+        usuarioAtualizar.setNome(usuario.getNome());
+        usuarioAtualizar.setTelefone(usuario.getTelefone());
+        usuarioAtualizar.setEmail(usuario.getEmail());
+        usuarioAtualizar.setSenha(usuario.getSenha());
+
+        return usuarioRepository.save(usuarioAtualizar);
+    }
+
+    public void excluir(Long id) {
+        Usuario usuarioExcluir = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuarioRepository.deleteById(usuarioExcluir.getId());
+    }
+
+}
