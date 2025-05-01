@@ -1,5 +1,6 @@
 function cadastrarUsuario() {
     const nome = document.getElementById('nome').value;
+    const telefone = document.getElementById('telefone').value;
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
     const mensagem = document.getElementById('mensagem');
@@ -9,7 +10,7 @@ function cadastrarUsuario() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, email, senha })
+        body: JSON.stringify({ nome, telefone,  email, senha })
     })
     .then(response => response.json().then(data => ({ status: response.status, body: data })))
     .then(({ status, body }) => {
