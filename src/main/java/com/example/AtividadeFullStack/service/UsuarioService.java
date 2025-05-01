@@ -12,7 +12,12 @@ import java.util.List;
 @Service
 @Validated
 public class UsuarioService {
+
     private UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public List<Usuario>listartodos(){
          return usuarioRepository.findAll();
