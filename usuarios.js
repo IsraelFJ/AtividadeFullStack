@@ -20,7 +20,8 @@ function carregarUsuarios() {
         usuarios.forEach(usuario => {
             const item = document.createElement('li')
             item.innerHTML = `<strong>Nome:</strong> ${usuario.nome}<br>
-                            <strong>E-mail:</strong> ${usuario.email}`
+                              <strong>Telefone:</strong> ${usuario.telefone}<br>                
+                              <strong>E-mail:</strong> ${usuario.email}`
             lista.appendChild(item)
         })
     })
